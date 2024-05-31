@@ -1,3 +1,6 @@
+
+var score;
+
 class Platformer extends Phaser.Scene {
     constructor() {
         super("platformerScene");
@@ -11,6 +14,9 @@ class Platformer extends Phaser.Scene {
         this.JUMP_VELOCITY = -600;
         this.PARTICLE_VELOCITY = 50;
         this.SCALE = 2.0;
+        this.FLAG_X = 35.0;
+        this.FLAG_Y = 360.0;
+        this.score = 0;
     }
 
     create() {
@@ -44,18 +50,42 @@ class Platformer extends Phaser.Scene {
             frame: 151
         });
 
+
+        for (let coin of this.coins) {
+            coin.anims.play('coin');
+        }
+
+        // EC
+        this.flag = this.map.createFromObjects("Objects", {
+            name: "flag",
+            key: "tilemap_sheet",
+            frame: 111
+        });
+
+        // EC
+        this.dias = this.map.createFromObjects("Objects", {
+            name: "dia",
+            key: "tilemap_sheet",
+            frame: 67
+        });
+
         // TODO: Add turn into Arcade Physics here
         // Since createFromObjects returns an array of regular Sprites, we need to convert 
         // them into Arcade Physics sprites (STATIC_BODY, so they don't move) 
         this.physics.world.enable(this.coins, Phaser.Physics.Arcade.STATIC_BODY);
+        this.physics.world.enable(this.dias, Phaser.Physics.Arcade.STATIC_BODY);  // EC
 
         // Create a Phaser group out of the array this.coins
         // This will be used for collision detection below.
         this.coinGroup = this.add.group(this.coins);
+        this.diasGroup = this.add.group(this.dias);  // EC
 
         // set up player avatar
-        my.sprite.player = this.physics.add.sprite(30, 345, "platformer_characters", "tile_0000.png");
+        my.sprite.player = this.physics.add.sprite(this.FLAG_X, this.FLAG_Y, "platformer_characters", "tile_0000.png");
         my.sprite.player.setCollideWorldBounds(true);
+        // EC
+        my.sprite.player.power_up = false;
+        my.sprite.player.touch_coin = false;
 
         // Enable collision handling
         this.physics.add.collider(my.sprite.player, this.groundLayer);
@@ -64,6 +94,13 @@ class Platformer extends Phaser.Scene {
         // Handle collision detection with coins
         this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
+            obj1.touch_coin = true;
+        });
+
+        // EC
+        this.physics.add.overlap(my.sprite.player, this.diasGroup, (obj1, obj2) => {
+            my.sprite.player.power_up = 180;
+            obj2.destroy();
         });
 
         // set up Phaser-provided cursor key input
@@ -95,16 +132,49 @@ class Platformer extends Phaser.Scene {
 
         my.vfx.walking.stop();
 
+        // EC
+        my.vfx.coin = this.add.particles(0, 0, 'kenny-particles', {
+            frame: ['star_01.png'],
+            scale: {start: 0.1, end: 0.5},
+            lifespan: 350,
+        })
+
+        my.vfx.coin.stop();
+    
+        my.vfx.sinking = this.add.particles(0, 0, 'kenny-particle', {
+            frame: ['circle_01.png'],
+            scale: {start: 0.1, end: 0.5},
+            lifespan: 350,
+            alpha: {start: 1, end: 0.1}, 
+        })
+        my.vfx.sinking.stop();
+
         // TODO: add camera code here
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(my.sprite.player, true, 0.25, 0.25); // (target, [,roundPixels][,lerpX][,lerpY])
         this.cameras.main.setDeadzone(50, 50);
         this.cameras.main.setZoom(this.SCALE);
 
+        // score board
+        score = 0;
+
+        this.scene.launch('UIScene');
     }
 
     update() {
+        if (my.sprite.player.touch_coin) {
+            my.sprite.player.touch_coin = false;
+            my.vfx.coin.startFollow(my.sprite.player, my.sprite.player.displayWidth/2-10, my.sprite.player.displayHeight/2-5, false);
+            my.vfx.coin.start();
+            score += 1;
+        } else {
+            my.vfx.coin.stop();
+        }
+    
+        
         if(cursors.left.isDown) {
+
+            
             my.sprite.player.setAccelerationX(-this.ACCELERATION);
             my.sprite.player.resetFlip();
             my.sprite.player.anims.play('walk', true);
@@ -146,13 +216,20 @@ class Platformer extends Phaser.Scene {
             my.vfx.walking.stop();
         }
 
+        let jump_vec;
+        if (my.sprite.player.power_up > 0) {
+            jump_vec = this.JUMP_VELOCITY * 1.5;
+            my.sprite.player.power_up -= 1;
+        } else {
+            jump_vec = this.JUMP_VELOCITY;
+        }
         // player jump
         // note that we need body.blocked rather than body.touching b/c the former applies to tilemap tiles and the latter to the "ground"
         if(!my.sprite.player.body.blocked.down) {
             my.sprite.player.anims.play('jump');
         }
         if(my.sprite.player.body.blocked.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
-            my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY);
+            my.sprite.player.body.setVelocityY(jump_vec);
         }
 
         if(Phaser.Input.Keyboard.JustDown(this.rKey)) {
@@ -160,4 +237,21 @@ class Platformer extends Phaser.Scene {
         }
 
     }
+}
+
+
+
+class UI extends Phaser.Scene {
+    constructor() {
+        super({ key: 'UIScene' });
+    }
+
+    create() {
+        this.scoreText = this.add.text(16, 16, 'score: 0', {fontSzie:'32px', fill:'#FFFFFF'});
+    }
+
+    update() {
+        this.scoreText.setText('score: ' + score);
+        
+    }    
 }

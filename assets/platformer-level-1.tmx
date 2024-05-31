@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="48" height="25" tilewidth="18" tileheight="18" infinite="0" nextlayerid="5" nextobjectid="58">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="48" height="25" tilewidth="18" tileheight="18" infinite="0" nextlayerid="6" nextobjectid="65">
  <editorsettings>
   <export target="platformer-level-1.tmj" format="json"/>
  </editorsettings>
@@ -241,8 +241,10 @@
   <object id="49" name="coin" gid="152" x="675.005" y="326.514" width="18" height="18"/>
   <object id="52" name="coin" gid="152" x="643.761" y="302.869" width="18" height="18"/>
   <object id="53" name="coin" gid="152" x="660.65" y="303.713" width="18" height="18"/>
-  <object id="55" gid="152" x="45.0449" y="356.914" width="18" height="18"/>
-  <object id="56" gid="152" x="60.245" y="358.603" width="18" height="18"/>
-  <object id="57" gid="152" x="83.8896" y="359.447" width="18" height="18"/>
+  <object id="58" name="flag" gid="112" x="35" y="360" width="18" height="18"/>
+  <object id="61" name="dia" gid="68" x="128.333" y="360.333" width="18" height="18"/>
+  <object id="62" name="dia" gid="68" x="198.667" y="288" width="18" height="18"/>
+  <object id="63" name="dia" gid="68" x="289.667" y="198.333" width="18" height="18"/>
+  <object id="64" name="coin" gid="152" x="108" y="360.25" width="18" height="18"/>
  </objectgroup>
 </map>

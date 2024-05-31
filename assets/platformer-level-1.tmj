@@ -52,8 +52,8 @@
                  "type":"",
                  "visible":true,
                  "width":18,
-                 "x":635.316082685823,
-                 "y":324.824659140888
+                 "x":635.316,
+                 "y":324.825
                 }, 
                 {
                  "gid":152,
@@ -64,8 +64,8 @@
                  "type":"",
                  "visible":true,
                  "width":18,
-                 "x":656.427356692567,
-                 "y":324.824659140888
+                 "x":656.427,
+                 "y":324.825
                 }, 
                 {
                  "gid":152,
@@ -76,8 +76,8 @@
                  "type":"",
                  "visible":true,
                  "width":18,
-                 "x":675.005277818502,
-                 "y":326.513561061428
+                 "x":675.005,
+                 "y":326.514
                 }, 
                 {
                  "gid":152,
@@ -88,8 +88,8 @@
                  "type":"",
                  "visible":true,
                  "width":18,
-                 "x":643.760592288521,
-                 "y":302.868934173875
+                 "x":643.761,
+                 "y":302.869
                 }, 
                 {
                  "gid":152,
@@ -100,44 +100,68 @@
                  "type":"",
                  "visible":true,
                  "width":18,
-                 "x":660.649611493916,
-                 "y":303.713385134145
+                 "x":660.65,
+                 "y":303.713
                 }, 
                 {
-                 "gid":152,
+                 "gid":112,
                  "height":18,
-                 "id":55,
-                 "name":"",
+                 "id":58,
+                 "name":"flag",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":18,
-                 "x":45.0448614572643,
-                 "y":356.913795631139
+                 "x":35,
+                 "y":360
                 }, 
                 {
-                 "gid":152,
+                 "gid":68,
                  "height":18,
-                 "id":56,
-                 "name":"",
+                 "id":61,
+                 "name":"dia",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":18,
-                 "x":60.2449787421199,
-                 "y":358.602697551679
+                 "x":128.333333333333,
+                 "y":360.333333333333
                 }, 
                 {
-                 "gid":152,
+                 "gid":68,
                  "height":18,
-                 "id":57,
-                 "name":"",
+                 "id":62,
+                 "name":"dia",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":18,
-                 "x":83.8896056296731,
-                 "y":359.447148511948
+                 "x":198.666666666667,
+                 "y":288
+                }, 
+                {
+                 "gid":68,
+                 "height":18,
+                 "id":63,
+                 "name":"dia",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":289.666666666667,
+                 "y":198.333333333333
+                }, 
+                {
+                 "gid":152,
+                 "height":18,
+                 "id":64,
+                 "name":"coin",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":18,
+                 "x":108,
+                 "y":360.25
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -145,8 +169,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":5,
- "nextobjectid":58,
+ "nextlayerid":6,
+ "nextobjectid":65,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
